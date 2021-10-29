@@ -10,5 +10,7 @@ package dataaccess;
  * @author David
  */
 public class RoleDB {
-    
+    public RoleDB() {
+        
+    }
 }

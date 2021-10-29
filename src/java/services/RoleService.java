@@ -5,6 +5,10 @@
  */
 package services;
 
+import java.util.List;
+import models.Role;
+import models.User;
+
 /**
  *
  * @author David
