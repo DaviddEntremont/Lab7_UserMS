@@ -8,9 +8,22 @@ public class Role {
 public Role() {
 }
 
-public Role(int Roleid, String Rolename) {
+public Role(int Roleid) {
+    
     this.roleid = Roleid;
-    this.rolename = Rolename;
+
+    switch(Roleid) {
+        case 1:
+            this.rolename = "system admin";
+           break;
+            case 2:
+            this.rolename = "regular user";
+            break;
+            case 3:
+            this.rolename = "company admin";
+            break;
+            default:
+}
 }
 
     public int getRoleid() {
@@ -18,6 +31,7 @@ public Role(int Roleid, String Rolename) {
     }
 
     public void setRoleid(int roleid) {
+        
         this.roleid = roleid;
     }
 
