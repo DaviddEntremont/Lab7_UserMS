@@ -9,6 +9,6 @@ package models;
  *
  * @author David
  */
-public class RoleService {
+public class Role {
     
 }
