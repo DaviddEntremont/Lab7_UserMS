@@ -54,13 +54,10 @@ public class UserServlet extends HttpServlet {
         if (active.equals("true")) {
             isactive = true;
         }
-        else if (active.equals("false")) {
+        else {
             isactive = false;
         }
-        else {
-            // Improper value
-        }
-        
+                
         try {
             switch (action) {
                 case "create":
