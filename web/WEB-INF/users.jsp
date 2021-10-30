@@ -10,7 +10,7 @@
         <h1>All Users</h1>
         <ul>
             <c:forEach items="${users}" var="user">
-                <li>${user.email}, ${user.email}, ${user.active}, ${user.firstname}, ${user.lastname}, ${user.password}, ${user.role}<br></li>
+                <li>${user.email}, ${user.active}, ${user.firstname}, ${user.lastname}, ${user.password}, ${user.role}<br></li>
             </c:forEach>
         </ul>
     </body>
