@@ -8,19 +8,16 @@
     </head>
     <body>
         <h1>All Users</h1>
-        <form action="" method="post">
+        
+        <form action="" method="GET">
             <ul>
 
             <c:forEach items="${users}" var="user">
-                <li>${user.email}, ${user.active}, ${user.firstname}, ${user.lastname}, ${user.password}, ${user.role} Select User: <input type="radio" name="selected" value="${user.email}"><br></li>
+                <li>${user.email}, ${user.firstname}, ${user.lastname}, ${user.password}, ${user.role} Select User: <input type="radio" name="selected" value="${user.email}"><br></li>
             </c:forEach>
         
             </ul>
-        
-            <input type="submit" value="Delete">
-            <input type="hidden" name="action" value="delete">
             <input type="submit" value="Select for Update">
-            <input type="hidden" name="action" value="update">
             </form>
             
         
@@ -53,7 +50,7 @@
                 <label>Email:</label>
             <input type="text" name="email" value="${selecteduser.email}"><br>
             <label>Active User:</label>
-            <input type="checkbox" name="active" value="${selecteduser.active}"><br>
+            <input type="checkbox" name="active" value=""><br>
             <label>First Name:</label>
             <input type="text" name="firstname" value="${selecteduser.firstname}"><br>
             <label>Last Name:</label>

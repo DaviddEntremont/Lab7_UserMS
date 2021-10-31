@@ -23,7 +23,7 @@ public class UserDB {
             rs = ps.executeQuery();
             while (rs.next()) {
                 String Email = rs.getString(1);
-                Boolean Active = rs.getBoolean(2);
+                String Active = rs.getString(2);
                 String Firstname = rs.getString(3);
                 String Lastname = rs.getString(4);
                 String Password = rs.getString(5);
@@ -47,14 +47,14 @@ public class UserDB {
         Connection con = cp.getConnection();
         PreparedStatement ps = null;
         ResultSet rs = null;
-        String sql = "SELECT * FROM note WHERE email=?";
+        String sql = "SELECT * FROM user WHERE email=?";
         
         try {
             ps = con.prepareStatement(sql);
             ps.setString(1, Email);
             rs = ps.executeQuery();
             if (rs.next()) {
-                Boolean Active = rs.getBoolean(2);
+                String Active = rs.getString(2);
                 String Firstname = rs.getString(3);
                 String Lastname = rs.getString(4);
                 String Password = rs.getString(5);
@@ -79,7 +79,7 @@ public class UserDB {
         try {
             ps = con.prepareStatement(sql);
             ps.setString(1, user.getEmail());
-            ps.setBoolean(2, user.isActive());
+            ps.setString(2, user.isActive());
             ps.setString(3, user.getFirstname());
             ps.setString(4, user.getLastname());
             ps.setString(5, user.getPassword());
@@ -99,7 +99,7 @@ public class UserDB {
         
         try {
             ps = con.prepareStatement(sql);
-            ps.setBoolean(1, user.isActive());
+            ps.setString(1, user.isActive());
             ps.setString(2, user.getFirstname());
             ps.setString(3, user.getLastname());
             ps.setString(4, user.getPassword());

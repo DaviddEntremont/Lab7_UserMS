@@ -32,11 +32,10 @@ public class UserServlet extends HttpServlet {
             request.setAttribute("message", "error");
         }
         
-        String action = request.getParameter("action");
-        if (action != null && action.equals("update")) {
+        String selected = request.getParameter("selected");
+        if (selected != null) {
             try {
-                String email = (String) request.getAttribute("selected");
-                User user = us.get(email);
+                User user = us.get(selected);
                 request.setAttribute("selecteduser", user);
             } catch (Exception ex) {
                 Logger.getLogger(UserServlet.class.getName()).log(Level.SEVERE, null, ex);
@@ -60,31 +59,27 @@ public class UserServlet extends HttpServlet {
         String lastname = request.getParameter("lastname");
         String password = request.getParameter("password");
         String role = request.getParameter("role");
-        Boolean isactive = false;
-        
-        if (active.equals("true")) {
-            isactive = true;
-        }
-        else {
-            isactive = false;
-        }
                 
         try {
             switch (action) {
                 case "create":
-                    us.insert(email, isactive, firstname, lastname, password, Integer.parseInt(role));
+                    us.insert(email, active, firstname, lastname, password, Integer.parseInt(role));
                     break;
                 case "update":
-                    us.update(email, isactive, firstname, lastname, password, Integer.parseInt(role));
+                    us.update(email, active, firstname, lastname, password, Integer.parseInt(role));
                     break;
                 case "delete":
                     us.delete(email);
+                    break;
+
             }
+        
             request.setAttribute("message", action);
-            } catch (Exception ex) {
+        }
+            catch (Exception ex) {
             Logger.getLogger(UserServlet.class.getName()).log(Level.SEVERE, null, ex);
             request.setAttribute("message", "error");
-        }
+                    }
         
         try {
             List<User> users = us.getAll();
