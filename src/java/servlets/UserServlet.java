@@ -32,6 +32,17 @@ public class UserServlet extends HttpServlet {
             request.setAttribute("message", "error");
         }
         
+        String action = request.getParameter("action");
+        if (action != null && action.equals("update")) {
+            try {
+                String email = (String) request.getAttribute("selected");
+                User user = us.get(email);
+                request.setAttribute("selecteduser", user);
+            } catch (Exception ex) {
+                Logger.getLogger(UserServlet.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        
         getServletContext().getRequestDispatcher("/WEB-INF/users.jsp").forward(request, response);
      
     }

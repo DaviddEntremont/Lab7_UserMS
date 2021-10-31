@@ -41,6 +41,35 @@ public class UserDB {
        
     }
     
+    public User get(String Email) throws Exception {
+        User user = null;
+        ConnectionPool cp = ConnectionPool.getInstance();
+        Connection con = cp.getConnection();
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        String sql = "SELECT * FROM note WHERE email=?";
+        
+        try {
+            ps = con.prepareStatement(sql);
+            ps.setString(1, Email);
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                Boolean Active = rs.getBoolean(2);
+                String Firstname = rs.getString(3);
+                String Lastname = rs.getString(4);
+                String Password = rs.getString(5);
+                int RoleNumber = rs.getInt(6);
+                user = new User(Email, Active, Firstname, Lastname, Password, RoleNumber);
+            }
+        } finally {
+            DBUtil.closeResultSet(rs);
+            DBUtil.closePreparedStatement(ps);
+            cp.freeConnection(con);
+        }
+        
+        return user;
+    }
+    
     public void insert(User user) throws Exception {
         ConnectionPool cp = ConnectionPool.getInstance();
         Connection con = cp.getConnection();

@@ -6,6 +6,12 @@ import models.User;
 
 public class UserService {
     
+    public User get(String Email) throws Exception {
+        UserDB userDB = new UserDB();
+        User user = userDB.get(Email);
+        return user;
+    }
+    
     public List<User> getAll() throws Exception {
         UserDB userDB = new UserDB();
         List<User> users = userDB.getAll();
