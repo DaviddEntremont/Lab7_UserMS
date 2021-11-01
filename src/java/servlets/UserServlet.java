@@ -1,6 +1,7 @@
 package servlets;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -19,14 +20,11 @@ public class UserServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
-        UserService us = new UserService();
-        RoleService rs = new RoleService();
+        UserService us = new UserService();        
         
         try {
-            List<User> users = us.getAll();
-            List<Role> roles = rs.getAll();
+            List<User> users = us.getAll();    
             request.setAttribute("users", users);
-            request.setAttribute("roles", roles);
         } catch (Exception ex) {
             Logger.getLogger(UserServlet.class.getName()).log(Level.SEVERE, null, ex);
             request.setAttribute("message", "error");
@@ -38,6 +36,8 @@ public class UserServlet extends HttpServlet {
                 User user = us.get(selected);
                 request.setAttribute("selecteduser", user);
                 request.setAttribute("selected", null);
+                request.setAttribute("message", "selected");
+                request.setAttribute("userfullname", user.getFirstname() + " " + user.getLastname());
             } catch (Exception ex) {
                 Logger.getLogger(UserServlet.class.getName()).log(Level.SEVERE, null, ex);
                 request.setAttribute("message", "error");
@@ -55,21 +55,41 @@ public class UserServlet extends HttpServlet {
         UserService us = new UserService();
         
         String action = request.getParameter("action");
+        
+        
         String email = request.getParameter("email");
         String active = request.getParameter("active");
         String firstname = request.getParameter("firstname");
         String lastname = request.getParameter("lastname");
         String password = request.getParameter("password");
-        String role = request.getParameter("role");
+        String Rolename = request.getParameter("role");
+        Role role = new Role();
+        if (!action.equals("delete")) {
+        RoleService roleservice = new RoleService();
+        List<Role> roles = new ArrayList();
+        try {
+            roles = roleservice.getAll();
+        } catch (Exception ex) {
+            Logger.getLogger(UserServlet.class.getName()).log(Level.SEVERE, null, ex);
+        }
+                role = new Role(Rolename);
+                for (int i = 0; i < roles.size(); i++) {
+                    if (role.getRolename().equals(roles.get(i).getRolename())) {
+                        role.setRoleid(roles.get(i).getRoleid());
+                    } else {
+                    }
+                }
+        }
         String selectedemail = request.getParameter("useremail");
+        request.setAttribute("userfullname", firstname + " " + lastname);
            
         try {
             switch (action) {
                 case "create":
-                    us.insert(email, Integer.parseInt(active), firstname, lastname, password, 2);
+                    us.insert(email, Integer.parseInt(active), firstname, lastname, password, role);
                     break;
                 case "update":
-                    us.update(selectedemail, 1, firstname, lastname, password, 2);
+                    us.update(selectedemail, 1, firstname, lastname, password, role);
                     break;
                 case "delete":
                     us.delete(selectedemail);

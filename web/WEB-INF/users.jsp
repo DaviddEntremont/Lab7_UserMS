@@ -7,30 +7,29 @@
         <title>Users</title>
     </head>
     <body>
-        <h1>All Users</h1>
-        <p>
-            <c:if test="${message eq 'create'}">Note created</c:if>
-            <c:if test="${message eq 'update'}">Note updated</c:if>
-            <c:if test="${message eq 'delete'}">Note deleted</c:if>
-            <c:if test="${message eq 'error'}">Sorry, something went wrong.</c:if>
-            </p>
-            
-    
-        
+        <h1>User Management Utility System</h1>
+
         <form action="" method="GET">
+            <h2>Select A User</h2>
             <ul>
 
             <c:forEach items="${users}" var="user">
-                <li>${user.email}, ${user.firstname}, ${user.lastname}, ${user.password}, ${user.role} Select User: <input type="radio" name="selected" value="${user.email}"><br></li>
+                <li><input type="radio" name="selected" value="${user.email}"> ${user.email}, ${user.firstname}, ${user.lastname}, ${user.password}, ${user.role.rolename} <br></li>
             </c:forEach>
         
             </ul>
             <input type="submit" value="Select for Update">
+            <br><br>
+            <c:if test="${message eq 'selected'}">User ${userfullname} selected!</c:if>
+        <c:if test="${selecteduser ne null}">
+            <input type="submit" value="Unselect This User?">
+        </c:if>
             </form>
-            
         
-
-            <h2>Add User</h2>
+            
+            
+        <c:if test="${selecteduser eq null}">
+            <h2>Add A User</h2>
             <form action="" method="post">
             <label>Email:</label>
             <input type="text" name="email" value=""><br>
@@ -48,11 +47,16 @@
             <option value="regular user">Regular User</option>
             <option value="company admin">Company Admin</option>
             </select>
+            <br>
                 <input type="hidden" name="action" value="create">
-                <input type="submit" value="Create">
+                <input type="submit" value="Create User">
             </form>
+            <br>
+            <br>
+        </c:if>
             
-            <h2>Edit Note</h2>
+        <c:if test="${selecteduser ne null}">
+            <h2>Update User</h2>
             <form action="" method="post">
                 <label>Email:</label>
             <input type="text" name="email" value="${selecteduser.email}"><br>
@@ -65,11 +69,13 @@
             <label>Password:</label>
             <input type="text" name="password" value="${selecteduser.password}"><br>
             <label>Role:</label>
-            <select name="role" id="categories" value="${selecteduser.role}">
+            <select name="role" id="categories" value="">
             <option value="system admin">System Admin</option>
             <option value="regular user">Regular User</option>
             <option value="company admin">Company Admin</option>
             </select>
+            
+            <br>
          
             <input type="hidden" name="action" value="update">
             <input type="hidden" name="useremail" value="${selecteduser.email}">
@@ -80,7 +86,13 @@
             <input type="hidden" name="useremail" value="${selecteduser.email}">
             <input type="hidden" name="action" value="delete">
             <input type="submit" value="Delete">
-            </form>
+            </form>    
+        </c:if>
+            
+            <c:if test="${message eq 'update'}">User ${userfullname} updated!</c:if>
+            <c:if test="${message eq 'delete'}">User deleted :(</c:if>
+            <c:if test="${message eq 'create'}">User ${userfullname} created!</c:if>
+            <c:if test="${message eq 'error'}">Sorry, something went wrong.</c:if>
             
     </body>
 </html>

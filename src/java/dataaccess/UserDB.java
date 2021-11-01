@@ -5,7 +5,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
+import models.Role;
 import models.User;
+import services.RoleService;
 
 public class UserDB {
     public List<User> getAll() throws Exception {
@@ -28,7 +30,15 @@ public class UserDB {
                 String Lastname = rs.getString(4);
                 String Password = rs.getString(5);
                 int RoleNumber = rs.getInt(6);
-                User user = new User(Email, Active, Firstname, Lastname, Password, RoleNumber);
+                RoleService roleservice = new RoleService();
+                List<Role> roles = roleservice.getAll();
+                Role role = new Role(RoleNumber);
+                for (int i = 0; i < roles.size(); i++) {
+                    if (role.getRoleid() == roles.get(i).getRoleid()) {
+                        role.setRolename(roles.get(i).getRolename());
+                    }
+                }
+                User user = new User(Email, Active, Firstname, Lastname, Password, role);
                 list.add(user);
             }
         } finally {
@@ -59,7 +69,15 @@ public class UserDB {
                 String Lastname = rs.getString(4);
                 String Password = rs.getString(5);
                 int RoleNumber = rs.getInt(6);
-                user = new User(Email, Active, Firstname, Lastname, Password, RoleNumber);
+                RoleService roleservice = new RoleService();
+                List<Role> roles = roleservice.getAll();
+                Role role = new Role(RoleNumber);
+                for (int i = 0; i < roles.size(); i++) {
+                    if (role.getRoleid() == roles.get(i).getRoleid()) {
+                        role.setRolename(roles.get(i).getRolename());
+                    }
+                }
+                user = new User(Email, Active, Firstname, Lastname, Password, role);
             }
         } finally {
             DBUtil.closeResultSet(rs);
@@ -83,7 +101,7 @@ public class UserDB {
             ps.setString(3, user.getFirstname());
             ps.setString(4, user.getLastname());
             ps.setString(5, user.getPassword());
-            ps.setInt(6, user.getRole());
+            ps.setInt(6, user.getRole().getRoleid());
             ps.executeUpdate();
         } finally {
             DBUtil.closePreparedStatement(ps);
@@ -103,7 +121,7 @@ public class UserDB {
             ps.setString(2, user.getFirstname());
             ps.setString(3, user.getLastname());
             ps.setString(4, user.getPassword());
-            ps.setInt(5, user.getRole());
+            ps.setInt(5, user.getRole().getRoleid());
             ps.setString(6, user.getEmail());
             ps.executeUpdate();
         } finally {

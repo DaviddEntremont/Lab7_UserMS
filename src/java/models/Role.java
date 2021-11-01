@@ -8,6 +8,15 @@ public class Role {
 public Role() {
 }
 
+public Role(int Roleid) {
+    this.roleid = Roleid;
+}
+
+public Role(String Rolename) {
+    this.rolename = Rolename;
+}
+
+
 public Role(int Roleid, String Rolename) {
     
     this.roleid = Roleid;
