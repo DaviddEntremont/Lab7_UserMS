@@ -72,6 +72,7 @@
             </select>
          
             <input type="hidden" name="action" value="update">
+            <input type="hidden" name="useremail" value="${selecteduser.email}">
             <input type="submit" value="Update">
             </form>
             

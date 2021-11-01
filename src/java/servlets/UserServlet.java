@@ -69,7 +69,7 @@ public class UserServlet extends HttpServlet {
                     us.insert(email, Integer.parseInt(active), firstname, lastname, password, 2);
                     break;
                 case "update":
-                    us.update(email, Integer.parseInt(active), firstname, lastname, password, 2);
+                    us.update(selectedemail, 1, firstname, lastname, password, 2);
                     break;
                 case "delete":
                     us.delete(selectedemail);
