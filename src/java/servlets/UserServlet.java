@@ -37,8 +37,10 @@ public class UserServlet extends HttpServlet {
             try {
                 User user = us.get(selected);
                 request.setAttribute("selecteduser", user);
+                request.setAttribute("selected", null);
             } catch (Exception ex) {
                 Logger.getLogger(UserServlet.class.getName()).log(Level.SEVERE, null, ex);
+                request.setAttribute("message", "error");
             }
         }
         
@@ -59,21 +61,20 @@ public class UserServlet extends HttpServlet {
         String lastname = request.getParameter("lastname");
         String password = request.getParameter("password");
         String role = request.getParameter("role");
-                
+        String selectedemail = request.getParameter("useremail");
+           
         try {
             switch (action) {
                 case "create":
-                    us.insert(email, active, firstname, lastname, password, Integer.parseInt(role));
+                    us.insert(email, Integer.parseInt(active), firstname, lastname, password, 2);
                     break;
                 case "update":
-                    us.update(email, active, firstname, lastname, password, Integer.parseInt(role));
+                    us.update(email, Integer.parseInt(active), firstname, lastname, password, 2);
                     break;
                 case "delete":
-                    us.delete(email);
+                    us.delete(selectedemail);
                     break;
-
             }
-        
             request.setAttribute("message", action);
         }
             catch (Exception ex) {

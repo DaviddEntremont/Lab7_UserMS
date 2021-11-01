@@ -18,21 +18,20 @@ public class UserService {
         return users;
     }
     
-    public void insert(String Email, String Active, String Firstname, String Lastname, String Password, int Thisrole) throws Exception {
+    public void insert(String Email, int Active, String Firstname, String Lastname, String Password, int Thisrole) throws Exception {
         User user = new User(Email, Active, Firstname, Lastname, Password, Thisrole);
         UserDB userDB = new UserDB();
         userDB.insert(user);
     }
     
-    public void update(String Email, String Active, String Firstname, String Lastname, String Password, int Thisrole) throws Exception {
+    public void update(String Email, int Active, String Firstname, String Lastname, String Password, int Thisrole) throws Exception {
         User user = new User(Email, Active, Firstname, Lastname, Password, Thisrole);
         UserDB userDB = new UserDB();
         userDB.update(user);
     }
     
     public void delete(String Email) throws Exception {
-        User user = new User();
-        user.setEmail(Email);
+        User user = get(Email);
         UserDB userDB = new UserDB();
         userDB.delete(user);
     }

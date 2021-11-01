@@ -8,6 +8,14 @@
     </head>
     <body>
         <h1>All Users</h1>
+        <p>
+            <c:if test="${message eq 'create'}">Note created</c:if>
+            <c:if test="${message eq 'update'}">Note updated</c:if>
+            <c:if test="${message eq 'delete'}">Note deleted</c:if>
+            <c:if test="${message eq 'error'}">Sorry, something went wrong.</c:if>
+            </p>
+            
+    
         
         <form action="" method="GET">
             <ul>
@@ -21,13 +29,13 @@
             </form>
             
         
-        <c:if test="${selectedNote eq null}">
+
             <h2>Add User</h2>
-            <form action="users" method="post">
+            <form action="" method="post">
             <label>Email:</label>
             <input type="text" name="email" value=""><br>
             <label>Active User:</label>
-            <input type="checkbox" name="active" value="true"><br>
+            <input type="checkbox" name="active" value="1"><br>
             <label>First Name:</label>
             <input type="text" name="firstname" value=""><br>
             <label>Last Name:</label>
@@ -39,14 +47,13 @@
             <option value="system admin">System Admin</option>
             <option value="regular user">Regular User</option>
             <option value="company admin">Company Admin</option>
-
+            </select>
                 <input type="hidden" name="action" value="create">
                 <input type="submit" value="Create">
             </form>
-        </c:if>
             
             <h2>Edit Note</h2>
-            <form action="notes" method="post">
+            <form action="" method="post">
                 <label>Email:</label>
             <input type="text" name="email" value="${selecteduser.email}"><br>
             <label>Active User:</label>
@@ -62,8 +69,16 @@
             <option value="system admin">System Admin</option>
             <option value="regular user">Regular User</option>
             <option value="company admin">Company Admin</option>
-                <input type="hidden" name="action" value="update">
-                <input type="submit" value="Update">
+            </select>
+         
+            <input type="hidden" name="action" value="update">
+            <input type="submit" value="Update">
+            </form>
+            
+            <form action="" method="post">
+            <input type="hidden" name="useremail" value="${selecteduser.email}">
+            <input type="hidden" name="action" value="delete">
+            <input type="submit" value="Delete">
             </form>
             
     </body>

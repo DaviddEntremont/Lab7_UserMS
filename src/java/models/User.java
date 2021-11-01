@@ -11,7 +11,7 @@ import java.io.Serializable;
 public class User implements Serializable {
     
     private String email;
-    private boolean active;
+    private int active;
     private String firstname;
     private String lastname;
     private String password;
@@ -20,13 +20,9 @@ public class User implements Serializable {
     public User() {
     }
     
-    public User(String Email, String Active, String Firstname, String Lastname, String Password, int Thisrole) {
+    public User(String Email, int Active, String Firstname, String Lastname, String Password, int Thisrole) {
         this.email = Email;
-        Boolean isactive = false;
-        if (Active.equals("true")) {
-            isactive = true;
-        }
-        this.active = isactive;
+        this.active = Active;
         this.firstname = Firstname;
         this.lastname = Lastname;
         this.password = Password;
@@ -41,23 +37,14 @@ public class User implements Serializable {
         this.email = email;
     }
 
-    public String isActive() {
-        String isactive = "false";
-        if (this.active == true) {
-            isactive = "true";
-        }
-        
-        return isactive;
+    public int isActive() {
+        return active;
     }
 
-    public void setActive(String active) {
-        Boolean isactive = false;
-        if (active.equals("true")) {
-            isactive = true;
-        }
-        this.active = isactive;
+    public void setActive(int Active) {
+       this.active = active;
     }
-
+    
     public String getFirstname() {
         return firstname;
     }
