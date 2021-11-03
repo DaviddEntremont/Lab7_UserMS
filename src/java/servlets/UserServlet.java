@@ -35,6 +35,20 @@ public class UserServlet extends HttpServlet {
             try {
                 User user = us.get(selected);
                 request.setAttribute("selecteduser", user);
+                if (user.isActive()) {
+                    request.setAttribute("activeuser", true);
+                }
+                switch (user.getRole().getRolename()) {
+                    case "system admin":
+                        request.setAttribute("sadmin", true);
+                        break;
+                    case "regular user":
+                        request.setAttribute("ruser", true);
+                        break;
+                    case "company admin":
+                        request.setAttribute("cadmin", true);
+                        break;
+                }
                 request.setAttribute("selected", null);
                 request.setAttribute("message", "selected");
                 request.setAttribute("userfullname", user.getFirstname() + " " + user.getLastname());
@@ -56,13 +70,15 @@ public class UserServlet extends HttpServlet {
         
         String action = request.getParameter("action");
         
-        
         String email = request.getParameter("email");
-        String active = request.getParameter("active");
+        String activestring =  request.getParameter("active");
+        int activeint = 0;
+        Boolean active = false;
         String firstname = request.getParameter("firstname");
         String lastname = request.getParameter("lastname");
         String password = request.getParameter("password");
         String Rolename = request.getParameter("role");
+        
         Role role = new Role();
         if (!action.equals("delete")) {
         RoleService roleservice = new RoleService();
@@ -86,10 +102,22 @@ public class UserServlet extends HttpServlet {
         try {
             switch (action) {
                 case "create":
-                    us.insert(email, Integer.parseInt(active), firstname, lastname, password, role);
+                    if (activestring != null) {
+                    activeint = Integer.parseInt(activestring);
+                    }
+                if (activeint == 1) {
+                    active = true;
+                }
+                    us.insert(email, active, firstname, lastname, password, role);
                     break;
                 case "update":
-                    us.update(selectedemail, 1, firstname, lastname, password, role);
+                    if (activestring != null) {
+                    activeint = Integer.parseInt(activestring);
+                    }
+                if (activeint == 1) {
+                    active = true;
+                }
+                    us.update(selectedemail, active, firstname, lastname, password, role);
                     break;
                 case "delete":
                     us.delete(selectedemail);

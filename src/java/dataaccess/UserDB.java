@@ -25,7 +25,7 @@ public class UserDB {
             rs = ps.executeQuery();
             while (rs.next()) {
                 String Email = rs.getString(1);
-                int Active = rs.getInt(2);
+                Boolean ActiveBool = rs.getBoolean(2);
                 String Firstname = rs.getString(3);
                 String Lastname = rs.getString(4);
                 String Password = rs.getString(5);
@@ -38,7 +38,7 @@ public class UserDB {
                         role.setRolename(roles.get(i).getRolename());
                     }
                 }
-                User user = new User(Email, Active, Firstname, Lastname, Password, role);
+                User user = new User(Email, ActiveBool, Firstname, Lastname, Password, role);
                 list.add(user);
             }
         } finally {
@@ -64,7 +64,7 @@ public class UserDB {
             ps.setString(1, Email);
             rs = ps.executeQuery();
             if (rs.next()) {
-                int Active = rs.getInt(2);
+                Boolean ActiveBool = rs.getBoolean(2);
                 String Firstname = rs.getString(3);
                 String Lastname = rs.getString(4);
                 String Password = rs.getString(5);
@@ -77,7 +77,7 @@ public class UserDB {
                         role.setRolename(roles.get(i).getRolename());
                     }
                 }
-                user = new User(Email, Active, Firstname, Lastname, Password, role);
+                user = new User(Email, ActiveBool, Firstname, Lastname, Password, role);
             }
         } finally {
             DBUtil.closeResultSet(rs);
@@ -97,7 +97,11 @@ public class UserDB {
         try {
             ps = con.prepareStatement(sql);
             ps.setString(1, user.getEmail());
-            ps.setInt(2, user.isActive());
+            int Active = 0;
+                if (user.isActive() == true) {
+                    Active = 1;
+                }
+            ps.setInt(2, Active);
             ps.setString(3, user.getFirstname());
             ps.setString(4, user.getLastname());
             ps.setString(5, user.getPassword());
@@ -117,7 +121,11 @@ public class UserDB {
         
         try {
             ps = con.prepareStatement(sql);
-            ps.setInt(1, user.isActive());
+             int Active = 0;
+                if (user.isActive() == true) {
+                    Active = 1;
+                }
+            ps.setInt(1, Active);
             ps.setString(2, user.getFirstname());
             ps.setString(3, user.getLastname());
             ps.setString(4, user.getPassword());
